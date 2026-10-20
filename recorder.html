@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Screen Recorder</title>
+  <link rel="stylesheet" href="recorder.css">
+</head>
+<body>
+  <main>
+    <header>
+      <h1><span class="dot" id="recDot"></span> Screen Recorder</h1>
+      <span class="timer" id="timer">00:00</span>
+    </header>
+
+    <section class="options" id="options">
+      <label><input type="checkbox" id="systemAudio" checked> System / tab audio</label>
+      <label><input type="checkbox" id="mic"> Microphone</label>
+      <label>Format <select id="format"></select></label>
+      <label class="wide">Log console &amp; network from <select id="logTab"></select></label>
+    </section>
+
+    <section class="controls">
+      <button id="startBtn" class="primary">Start recording</button>
+      <button id="pauseBtn" hidden>Pause</button>
+      <button id="stopBtn" class="danger" hidden>Stop</button>
+    </section>
+
+    <p class="status" id="status">Pick what to record after clicking Start.</p>
+
+    <video id="preview" playsinline></video>
+
+    <section class="recordings" id="recordingsSection" hidden>
+      <h2>Recordings</h2>
+      <ul id="recordings"></ul>
+    </section>
+  </main>
+  <script src="db.js"></script>
+  <script src="logger.js"></script>
+  <script src="recorder.js"></script>
+</body>
+</html>

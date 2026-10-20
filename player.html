@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Recording</title>
+  <link rel="stylesheet" href="common.css">
+  <link rel="stylesheet" href="player.css">
+</head>
+<body>
+  <div class="app" id="app">
+    <header class="top">
+      <div class="title">
+        <h1 id="title">Loading…</h1>
+        <p id="subtitle"></p>
+      </div>
+      <div class="actions">
+        <button id="downloadVideo">Download video</button>
+        <button id="exportHar" title="HTTP Archive — open it in DevTools › Network">Export HAR</button>
+        <button id="exportConsole">Export console</button>
+      </div>
+    </header>
+
+    <section class="stage">
+      <video id="video" playsinline></video>
+      <div class="transport">
+        <button id="playBtn" class="icon-btn" aria-label="Play">▶</button>
+        <div class="scrub">
+          <div class="markers" id="markers"></div>
+          <input type="range" id="slider" min="0" max="1" step="0.01" value="0" aria-label="Timeline">
+        </div>
+        <span class="time" id="time">0:00.0 / 0:00.0</span>
+        <select id="speed" aria-label="Playback speed">
+          <option value="0.25">0.25×</option>
+          <option value="0.5">0.5×</option>
+          <option value="1" selected>1×</option>
+          <option value="1.5">1.5×</option>
+          <option value="2">2×</option>
+        </select>
+      </div>
+    </section>
+
+    <div class="splitter" id="splitter" role="separator" tabindex="0" aria-label="Resize video and log panels"
+         title="Drag to resize · double-click to reset"></div>
+
+    <section class="logs" id="logs">
+      <nav class="tabs" role="tablist">
+        <button role="tab" data-tab="console" aria-selected="true">Console <span class="count" id="consoleCount"></span></button>
+        <button role="tab" data-tab="network" aria-selected="false">Network <span class="count" id="networkCount"></span></button>
+      </nav>
+      <div class="toolbar">
+        <input type="search" id="filter" placeholder="Filter"
+               title="All words must match · -word excludes · a|b matches either">
+        <span class="filters" data-for="console">
+          <label><input type="checkbox" data-level="error" checked> Errors</label>
+          <label><input type="checkbox" data-level="warn" checked> Warnings</label>
+          <label><input type="checkbox" data-level="info" checked> Info</label>
+          <label><input type="checkbox" data-level="debug"> Verbose</label>
+        </span>
+        <span class="filters" data-for="network" hidden>
+          <select id="netType" aria-label="Request type">
+            <option value="">All types</option>
+            <option value="XHR,Fetch">Fetch/XHR</option>
+            <option value="Document">Doc</option>
+            <option value="Script">JS</option>
+            <option value="Stylesheet">CSS</option>
+            <option value="Image">Img</option>
+            <option value="Media">Media</option>
+            <option value="Font">Font</option>
+            <option value="other">Other</option>
+          </select>
+          <label><input type="checkbox" id="failedOnly"> Failed only</label>
+        </span>
+        <label class="follow"><input type="checkbox" id="follow" checked> Follow playback</label>
+      </div>
+      <div class="presets" data-for="network" hidden>
+        <span class="label">Presets</span>
+        <span class="chips" id="presetChips"></span>
+        <button type="button" class="link-btn" id="savePreset" title="Save the current filter as a preset">＋ Save filter</button>
+        <button type="button" class="link-btn" id="editPresets">Edit…</button>
+      </div>
+      <div class="list" id="consoleList" data-list="console"></div>
+      <div class="list" id="networkList" data-list="network" hidden>
+        <div class="row net head">
+          <span>Time</span><span>Method</span><span>Status</span><span>Name</span><span>Type</span><span class="num">Size</span><span class="num">Duration</span>
+        </div>
+      </div>
+      <p class="empty" id="empty" hidden></p>
+    </section>
+  </div>
+
+  <dialog id="presetDialog">
+    <form method="dialog">
+      <h2>Network filter presets</h2>
+      <p class="hint">The filter text works like the Filter box: all words must match, <code>-word</code> excludes, <code>a|b</code> matches either.</p>
+      <div class="preset-row head"><span>Name</span><span>Filter</span><span></span></div>
+      <div id="presetRows"></div>
+      <button type="button" class="link-btn" id="addPreset">＋ Add preset</button>
+      <div class="dialog-actions">
+        <button value="cancel" formnovalidate>Cancel</button>
+        <button value="save" class="primary">Save</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="db.js"></script>
+  <script src="player.js"></script>
+</body>
+</html>

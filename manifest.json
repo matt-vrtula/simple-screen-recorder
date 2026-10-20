@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "Simple Screen Recorder",
+  "version": "1.2.0",
+  "description": "Record your screen, a window or a tab together with a tab's console and network log, then replay them in sync.",
+  "minimum_chrome_version": "116",
+  "permissions": ["debugger", "tabs", "storage", "unlimitedStorage"],
+  "action": {
+    "default_title": "Open screen recorder",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+}
